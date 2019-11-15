@@ -41,6 +41,14 @@ class FeedStoreSpy: FeedStore {
         receivedMessages.append(.insert(feed, timestamp))
     }
     
+    func completeInsertion(with error: Error, at index: Int = 0) {
+        insertionCompletions[index](error)
+    }
+    
+    func completeSuccessfuly(at index: Int = 0) {
+        insertionCompletions[index](nil)
+    }
+    
     func retrive(completion: @escaping RetrivalCompletion) {
         retrivalCompletions.append(completion)
         receivedMessages.append(.retrive)
@@ -50,11 +58,7 @@ class FeedStoreSpy: FeedStore {
         retrivalCompletions[index](error)
     }
     
-    func completeInsertion(with error: Error, at index: Int = 0) {
-        insertionCompletions[index](error)
-    }
-    
-    func completeSuccessfuly(at index: Int = 0) {
-        insertionCompletions[index](nil)
+    func completeRetrivalWithEmptyCache(at index: Int = 0) {
+        retrivalCompletions[index](nil)
     }
 }

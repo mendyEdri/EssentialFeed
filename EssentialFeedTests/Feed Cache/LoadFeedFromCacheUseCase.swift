@@ -85,7 +85,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
     }
     
     // We don't want to call 'delete' if not needed - when cache is empty
-    func test_load_doesNotDeletesCacheOnEmptyCache() {
+    func test_load_hasNoSideEffectsOnEmptyCache() {
         let (sut, store) = makeSUT()
         
         sut.load { _ in }

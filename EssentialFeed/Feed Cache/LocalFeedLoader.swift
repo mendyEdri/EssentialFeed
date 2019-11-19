@@ -35,7 +35,6 @@ public final class LocalFeedLoader {
 }
 
 extension LocalFeedLoader {
-    
     public func save(_ feed: [FeedImage], completion: @escaping (SaveResult) -> Void) {
         store.deleteCachedFeed { [weak self] error in
             guard let self = self else { return }
@@ -56,8 +55,7 @@ extension LocalFeedLoader {
     }
 }
 
-extension LocalFeedLoader {
-    
+extension LocalFeedLoader: FeedLoader {
     public func load(completion: @escaping (LoadResult) -> Void) {
         store.retrive { [weak self] result in
             guard let self = self else { return }
@@ -77,7 +75,6 @@ extension LocalFeedLoader {
 }
 
 extension LocalFeedLoader {
-    
     public func validateCache() {
         store.retrive { [weak self] result in
             guard let self = self else { return }

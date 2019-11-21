@@ -22,7 +22,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
         
         sut.load { _ in }
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_load_failsOnCacheRetrivalError() {
@@ -81,7 +81,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
         sut.load { _ in }
         store.completeRetrival(with: anyNSError())
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     // We don't want to call 'delete' if not needed - when cache is empty
@@ -91,7 +91,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
         sut.load { _ in }
         store.completeRetrivalWithEmptyCache()
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_load_hasNoSideEffectsOnNonExpiredCache() {
@@ -103,7 +103,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
         sut.load { _ in }
         store.completeRetrival(with: feed.local, timestamp: nonExpiredTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_load_hasNoSideEffectsOnCacheExpiration() {
@@ -115,7 +115,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
         sut.load { _ in }
         store.completeRetrival(with: feed.local, timestamp: expirationTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_load_hasNoSideEffectsOnExpiredCache() {
@@ -127,7 +127,7 @@ class LoadFeedFromCacheUseCase: XCTestCase {
         sut.load { _ in }
         store.completeRetrival(with: feed.local, timestamp: expiredTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_load_doesNotDeliverResultAfterInstanceHasBeenDeallocated() {

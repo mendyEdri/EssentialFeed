@@ -23,7 +23,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         sut.validateCache()
         store.completeRetrival(with: anyNSError())
         
-        XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
+        XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
     
     func test_validateCache_doesNotDeletesCacheOnEmptyCache() {
@@ -32,7 +32,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         sut.validateCache()
         store.completeRetrivalWithEmptyCache()
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_validateCache_doesNotDeletesCacheOnNonExpiredCache() {
@@ -44,7 +44,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         sut.validateCache()
         store.completeRetrival(with: feed.local, timestamp: nonExpiredTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_validateCache_deletesExpiredCache() {
@@ -56,7 +56,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         sut.validateCache()
         store.completeRetrival(with: feed.local, timestamp: expiredTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
+        XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
     
     func test_validateCache_deletesMoreExpiredCache() {
@@ -68,7 +68,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         sut.validateCache()
         store.completeRetrival(with: feed.local, timestamp: expiredTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
+        XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
     
     func test_validateCache_doesNotDeleteInvalidCacheAfterInstanceHasBeenDeallocated() {
@@ -80,7 +80,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         sut = nil
         store.completeRetrival(with: anyNSError())
         
-        XCTAssertEqual(store.receivedMessages, [.retrive])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     // MARK: - Helpers
